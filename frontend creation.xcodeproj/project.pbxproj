@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D91CEBA24E3900C00B0EE01 /* LocationClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D91CEB924E3900C00B0EE01 /* LocationClass.swift */; };
 		7462E4FC24E375DC006B3448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7462E4FB24E375DC006B3448 /* AppDelegate.swift */; };
 		7462E4FE24E375DC006B3448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7462E4FD24E375DC006B3448 /* SceneDelegate.swift */; };
 		7462E50024E375DC006B3448 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7462E4FF24E375DC006B3448 /* ContentView.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D91CEB924E3900C00B0EE01 /* LocationClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationClass.swift; sourceTree = "<group>"; };
 		7462E4F824E375DC006B3448 /* frontend creation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "frontend creation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7462E4FB24E375DC006B3448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7462E4FD24E375DC006B3448 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				7462E51724E377C9006B3448 /* Map.swift */,
 				7462E51924E377DF006B3448 /* SearchBar.swift */,
 				7462E51324E37776006B3448 /* Explore.swift */,
+				2D91CEB924E3900C00B0EE01 /* LocationClass.swift */,
 				7462E50124E375DF006B3448 /* Assets.xcassets */,
 				7462E50624E375DF006B3448 /* LaunchScreen.storyboard */,
 				7462E50924E375DF006B3448 /* Info.plist */,
@@ -165,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7462E51224E3774E006B3448 /* CurrLoc.swift in Sources */,
+				2D91CEBA24E3900C00B0EE01 /* LocationClass.swift in Sources */,
 				7462E51624E3778B006B3448 /* HomeView.swift in Sources */,
 				7462E51824E377C9006B3448 /* Map.swift in Sources */,
 				7462E4FC24E375DC006B3448 /* AppDelegate.swift in Sources */,
