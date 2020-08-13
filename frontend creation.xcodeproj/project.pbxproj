@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D41E4E124E5EF21004ED9FB /* backend in Resources */ = {isa = PBXBuildFile; fileRef = 2D41E4E024E5EF21004ED9FB /* backend */; };
 		7454B27924E52E500093AC4E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7454B27824E52E500093AC4E /* LocationManager.swift */; };
 		7462E4FC24E375DC006B3448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7462E4FB24E375DC006B3448 /* AppDelegate.swift */; };
 		7462E4FE24E375DC006B3448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7462E4FD24E375DC006B3448 /* SceneDelegate.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D41E4E024E5EF21004ED9FB /* backend */ = {isa = PBXFileReference; lastKnownFileType = folder; path = backend; sourceTree = "<group>"; };
 		7454B27824E52E500093AC4E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7462E4F824E375DC006B3448 /* frontend creation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "frontend creation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7462E4FB24E375DC006B3448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 		7462E4EF24E375DC006B3448 = {
 			isa = PBXGroup;
 			children = (
+				2D41E4E024E5EF21004ED9FB /* backend */,
 				7462E4FA24E375DC006B3448 /* frontend creation */,
 				7462E4F924E375DC006B3448 /* Products */,
 			);
@@ -157,6 +160,7 @@
 				7462E50824E375DF006B3448 /* LaunchScreen.storyboard in Resources */,
 				7462E50524E375DF006B3448 /* Preview Assets.xcassets in Resources */,
 				7462E50224E375DF006B3448 /* Assets.xcassets in Resources */,
+				2D41E4E124E5EF21004ED9FB /* backend in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

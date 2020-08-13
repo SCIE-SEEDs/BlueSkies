@@ -84,8 +84,6 @@
         * If want to reset AQI whenever user needs to, please use the getAQI(), since it returns value and automatically calls resetAQI()
  */
 
-import Foundation
-
 //
 //  API.swift
 //  Wireframe
@@ -98,13 +96,13 @@ import Foundation
 
 class Location {
    // var id: Int
-    var city: String
-    var state: String
-    var country: String
-    var coordinates: [Double]
-    var aqi: Int
+    fileprivate var city: String
+    fileprivate var state: String
+    fileprivate var country: String
+    fileprivate var coordinates: [Double]
+    fileprivate var aqi: Int
     
-    init() {
+    public init() {
         city = ""
         state = ""
         country = "USA"
@@ -118,107 +116,115 @@ class Location {
      * @param state the state
      * @param country the country
     */
-    init(city: String, state: String, country: String) {
+    public init(city: String, state: String, country: String, coordinates: [Double]) {
         self.city = city
         self.state = state
         self.country = country
-        coordinates = []
-        aqi = 0
+        self.coordinates = coordinates
+        self.aqi = 0
         fetchData()
     }
     
     /**
-      * Fetches the data & assigns the values to coordinates and aqi
+      * Fetches the data & assigns the values to aqi
     */
-    func fetchData() -> Void {
+    fileprivate func fetchData() -> Void {
+        var jsonData: Data?
         fetchSmogSpecifiedCityInput(city: self.city, state: self.state, country: self.country) {
             (result: String) in
-            //print(result)
-            self.coordinates = stringSearcherCoordinates(result: result)
-            print("Found coordinates: \(self.coordinates)")
-            //self.aqi = stringSearcherAQI(result: result)
+            //fetches the aqi info
+            jsonData = result.data(using: .utf8)!
         }
+        let json = try? JSONSerialization.jsonObject(with: jsonData!, options: [])
+        let dictionary = (json as? [String: Any] )!
+        let data = (dictionary["data"]! as? [String: Any])!
+        let current = (data["current"]! as? [String: Any])!
+        let pollution = (current["pollution"]! as? [String: Any])!
+        //print("entered")
+        self.aqi = pollution["aqius"]! as! Int
     }
 
-}
+    /**
+     * Fetches the unfiltered JSON data
+     * @param city the city to search for
+     * @param state the state to search for
+     * @param country the country to search within
+     * @completion the completion handler that returns String of JSON data
+    */
+    fileprivate func fetchSmogSpecifiedCityInput(city: String, state: String, country: String, completion: @escaping (_ result: String) -> Void) {
+        
+        //converts the cities, state, and country into a URL safe format
+        let newCity : String = city.stringByAddingPercentEncodingForRFC3986()!
+        let newState : String = state.stringByAddingPercentEncodingForRFC3986()!
+        let newCountry : String = country.stringByAddingPercentEncodingForRFC3986()!
+        
+        //semaphores are used for shared resources
+        let semaphore = DispatchSemaphore (value: 0)
+        
+        let stringURL = "http://api.airvisual.com/v2/city?city=\(newCity)&state=\(newState)&country=\(newCountry)&key=55593aa1-c351-45bf-975a-9c687b2b1ecb"
+        //"http://api.airvisual.com/v2/city?city=Los%20Angeles&state=California&country=USA&key=55593aa1-c351-45bf-975a-9c687b2b1ecb"
 
-/**
- * Fetches the unfiltered JSON data
- * @param city the city to search for
- * @param state the state to search for
- * @param country the country to search within
- * @completion the completion handler that returns String of JSON data
-*/
-func fetchSmogSpecifiedCityInput(city: String, state: String, country: String, completion: @escaping (_ result: String) -> Void) {
-    let newCity : String = city.stringByAddingPercentEncodingForRFC3986()!
-    let newState : String = state.stringByAddingPercentEncodingForRFC3986()!
-    let newCountry : String = country.stringByAddingPercentEncodingForRFC3986()!
-    
-    let semaphore = DispatchSemaphore (value: 0)
-    
-    let stringURL = "http://api.airvisual.com/v2/city?city=\(newCity)&state=\(newState)&country=\(newCountry)&key=55593aa1-c351-45bf-975a-9c687b2b1ecb"
-    //"http://api.airvisual.com/v2/city?city=Los%20Angeles&state=California&country=USA&key=55593aa1-c351-45bf-975a-9c687b2b1ecb"
+        var request = URLRequest(url: URL(string: stringURL)!,timeoutInterval: Double.infinity)
+        request.httpMethod = "GET"
 
-    var request = URLRequest(url: URL(string: stringURL)!,timeoutInterval: Double.infinity)
-    request.httpMethod = "GET"
-
-    let task = URLSession.shared.dataTask(with: request) { data, response, error in
-      guard let data = data else {
-        print(String(describing: error))
-        return
-      }
-      completion(String(data: data, encoding: .utf8)!)
-      semaphore.signal()
-    }
-
-    task.resume()
-    semaphore.wait()
-}
-
-/**
-  * Returns the coordinates given the JSON data
-  * param result The unfiltered JSON data returned by fetchSmogSpecifiedCityInput()
-  * return an array of doubles (2 values returned) containing the coordinates
-*/
-func stringSearcherCoordinates(result: String)  -> ([Double]) {
-    
-   // let str = "abcde"
-    var substring = ""
-    if let range = result.range(of: "coordinates\":[")  { //"cd"
-        substring = String(result[range.upperBound...])
-        if let range = substring.range(of: "]}") {
-            substring = String(substring[...range.lowerBound])
-        //print(substring)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+          guard let data = data else {
+            print(String(describing: error))
+            return
+          }
+            completion(String(data: data, encoding: .utf8)!)
+          semaphore.signal()
         }
+
+        task.resume()
+        
+        semaphore.wait()
     }
     
-    //substring is good
-    //print(substring)
-    let array = (substring.components(separatedBy: ","))
-    //print(array)
-    //print(array2)
-
-    let double1 : Double = Double(array[0])!
-    let double2 : Double = Double( array[1].components(separatedBy: "]")[0] )!
-
-
-    //ASK ANNA
-    return [double1, double2]
-}
-/**
-  * Returns the AQI given the data
-  * @param result The unfiltered JSON data returned by fetchSmogSpecifiedCityInput()
-  * @return an array of doubles (2 values returned) containing the coordinates
-*/
-func stringSearcherAQI(result: String)  -> Int {
     
-   // let str = "abcde"
-    var substring = ""
-    if let range = result.range(of: "aqius\":")  { //"cd"
-        substring = String(result[range.upperBound...])
-        print(substring)
+    //PUBLIC GETTER METHODS
+    public func getCity() -> String {
+        return self.city
     }
 
-    let array = Int(substring.components(separatedBy: ",")[0])!
-    return array
+    public func getState() -> String {
+        return self.state
+    }
+
+    public func getCountry() -> String {
+        return self.country
+    }
+
+    public func getCoordinates() -> [Double] {
+        return self.coordinates
+    }
+
+    public func getAQI() -> Int {
+        resetAQI()
+        return self.aqi
+    }
+
+    //PUBLIC SETTER METHODS
+    //sets the new city
+    public func setCity(city : String) -> Void {
+        self.city = city
+    }
+    
+    public func setState(state : String) -> Void {
+        self.state = state
+    }
+    
+    public func setCountry(country : String) -> Void {
+        self.country = country
+    }
+    
+    public func setCoordinates(coordinates : [Double]) -> Void {
+        self.coordinates = coordinates
+    }
+    
+    //PUBLIC Method for manually resetting AQI.
+    //Not necessary to call if calling getAQI()
+    public func resetAQI() -> Void {
+        fetchData()
+    }
 }
