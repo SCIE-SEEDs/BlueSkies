@@ -7,8 +7,45 @@
 //
 
 import SwiftUI
+import MapKit
+import CoreLocation
 
 struct HomeView: View {
+    @ObservedObject var locationManager = LocationManager()
+
+    var userLatitude: String {
+        return "\(locationManager.lastLocation?.coordinate.latitude ?? 0)"
+    }
+
+    var userLongitude: String {
+        return "\(locationManager.lastLocation?.coordinate.longitude ?? 0)"
+    }
+    
+    func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?)
+                    -> Void ) {
+        // Use the last reported location.
+        if let lastLocation = self.locationManager.lastLocation {
+            let geocoder = CLGeocoder()
+                
+            // Look up the location and pass it to the completion handler
+            geocoder.reverseGeocodeLocation(lastLocation,
+                        completionHandler: { (placemarks, error) in
+                if error == nil {
+                    let firstLocation = placemarks?[0]
+                    completionHandler(firstLocation)
+                }
+                else {
+                 // An error occurred during geocoding.
+                    completionHandler(nil)
+                }
+            })
+        }
+        else {
+            // No location was available.
+            completionHandler(nil)
+        }
+    }
+    
     struct Button: ViewModifier {
            func body (content: Content) -> some View {
                return content
@@ -29,10 +66,18 @@ struct HomeView: View {
             NavigationLink(destination: Explore()) {
                 Text("Explore").modifier(Button())
             }.background(Image("Button"))
+            VStack {
+                Text("location status: \(locationManager.statusString)")
+                HStack {
+                    Text("latitude: \(userLatitude)")
+                    Text("longitude: \(userLongitude)")
+                }
+            }
         }
         .background(Image("Background"))
     }
 }
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

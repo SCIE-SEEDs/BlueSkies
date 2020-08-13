@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct CurrLoc: View {
+    // @State var city : City
     @State var AQI = 299
     @State var temp = 3
     @State var hum = 2
@@ -115,11 +116,13 @@ struct CurrLoc: View {
 
         }
         .background(Image("Background"))
+    .navigationBarBackButtonHidden(true)
+    .navigationBarHidden(true)
     }
 }
 
-struct CurrLoc_Previews: PreviewProvider {
-    static var previews: some View {
-        CurrLoc()
-    }
-}
+//struct CurrLoc_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CurrLoc()
+//    }
+//}
