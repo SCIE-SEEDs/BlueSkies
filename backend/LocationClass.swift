@@ -48,6 +48,7 @@
         * If you want to change the aqi, call resetAQI(). If you want to reset + get aqi, then call getAQI().
         * Calls fetchSmogSpecifiedCityInput() to recieve JSON information, then manually sorts through the information and searches for the aqi
     * FILE-PRIVATE fetchSmogSpecifiedCityInput(city: String, state: String, country: String, completion: @escaping (_ result: String) -> Void)
+        * Calls stringByAddingPercentEncodingForRFC3986(), which is located in StringExtension, to fit URL Encoding Standard
         * Fetches the JSON information from API and returns as a String
         * Uses completion handler, so must use this format to get result:
             * fetchSmogSpecifiedCityInput(city: self.city, state: self.state, country: self.country) {
@@ -139,9 +140,6 @@ class Location {
         }
     }
 
-    func insertCoordinates(coordinates: [Double]) -> Void {
-      self.coordinates = coordinates;
-    }
 }
 
 /**
@@ -152,23 +150,13 @@ class Location {
  * @completion the completion handler that returns String of JSON data
 */
 func fetchSmogSpecifiedCityInput(city: String, state: String, country: String, completion: @escaping (_ result: String) -> Void) {
-    var newCity = city
-    var newState = state
-
-    //ASK ANNA
-    if let firstSpace = newCity.firstIndex(of: " ") {
-        newCity = newCity.prefix(upTo: firstSpace) + "%20" + newCity.suffix(from: firstSpace)
-    }
-    if let firstSpace = newState.firstIndex(of: " ") {
-        newState = newState.prefix(upTo: firstSpace) + "%20" + newState.suffix(from: firstSpace)
-    }
+    let newCity : String = city.stringByAddingPercentEncodingForRFC3986()!
+    let newState : String = state.stringByAddingPercentEncodingForRFC3986()!
+    let newCountry : String = country.stringByAddingPercentEncodingForRFC3986()!
     
-    print(newCity)
-    print(newState)
-
     let semaphore = DispatchSemaphore (value: 0)
     
-    let stringURL = "http://api.airvisual.com/v2/city?city=\(newCity)&state=\(newState)&country=\(country)&key=55593aa1-c351-45bf-975a-9c687b2b1ecb"
+    let stringURL = "http://api.airvisual.com/v2/city?city=\(newCity)&state=\(newState)&country=\(newCountry)&key=55593aa1-c351-45bf-975a-9c687b2b1ecb"
     //"http://api.airvisual.com/v2/city?city=Los%20Angeles&state=California&country=USA&key=55593aa1-c351-45bf-975a-9c687b2b1ecb"
 
     var request = URLRequest(url: URL(string: stringURL)!,timeoutInterval: Double.infinity)
@@ -189,8 +177,8 @@ func fetchSmogSpecifiedCityInput(city: String, state: String, country: String, c
 
 /**
   * Returns the coordinates given the JSON data
-  * @param result The unfiltered JSON data returned by fetchSmogSpecifiedCityInput()
-  * @return an array of doubles (2 values returned) containing the coordinates
+  * param result The unfiltered JSON data returned by fetchSmogSpecifiedCityInput()
+  * return an array of doubles (2 values returned) containing the coordinates
 */
 func stringSearcherCoordinates(result: String)  -> ([Double]) {
     
@@ -217,34 +205,11 @@ func stringSearcherCoordinates(result: String)  -> ([Double]) {
     //ASK ANNA
     return [double1, double2]
 }
-/*
-    if ​let double1 = Double(array[0]) {
-        print(double1)
-    }
-    else {
-      print("Unable to convert array to double")
-      return []
-    }
-    //print(double1)
-    return []
-}
-
-    guard​ ​let​ double2 = Double(array2) else {
-      print("Unable to convert array to double")
-      return
-    }
-
-    return ( [ double1, double2 ] )//, array2] )
-}
-*/
-
 /**
   * Returns the AQI given the data
   * @param result The unfiltered JSON data returned by fetchSmogSpecifiedCityInput()
   * @return an array of doubles (2 values returned) containing the coordinates
 */
-
-/*
 func stringSearcherAQI(result: String)  -> Int {
     
    // let str = "abcde"
@@ -257,5 +222,3 @@ func stringSearcherAQI(result: String)  -> Int {
     let array = Int(substring.components(separatedBy: ",")[0])!
     return array
 }
-
-*/
