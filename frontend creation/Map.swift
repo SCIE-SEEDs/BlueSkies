@@ -33,27 +33,26 @@ struct Map: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let Map = MKMapView()
         Map.delegate = context.coordinator
-        
 
+        let Maps : [Location] = [Atlanta, Amsterdam, Austin, Beijing, Berlin, Boston, Chicago, London, LosAngeles, Madrid, Miami, Moscow, Mumbai, NewYorkCity, Paris, Phoenix, SanDiego, SanFrancisco, SanJose, Seattle, Seoul, Shanghai, Tokyo, Toronto]
         
-        let SanFrancisco = MKPointAnnotation()
-        SanFrancisco.title = "100"
-        SanFrancisco.subtitle = "San Francisco"
-        SanFrancisco.coordinate = CLLocationCoordinate2D(latitude: 37.7749, longitude: 122.4194)
-        Map.addAnnotation(SanFrancisco)
+        var MKPoints : [MKPointAnnotation] = []
         
-        let LosAngeles = MKPointAnnotation()
-        LosAngeles.title = "200"
-        LosAngeles.subtitle = "Los Angeles"
-        LosAngeles.coordinate = CLLocationCoordinate2D(latitude: 34.0522, longitude: -118.2437)
-        Map.addAnnotation(LosAngeles)
-        
-        let SanDiego = MKPointAnnotation()
-        SanDiego.title = "100"
-        SanDiego.subtitle = "San Diego"
-        SanDiego.coordinate = CLLocationCoordinate2D(latitude: 32.7157, longitude: -117.1611)
-        Map.addAnnotation(SanDiego)
-
+        for city in Maps {
+            let placeHolder = MKPointAnnotation()
+            if (city.getAQI() < 0) {
+                city.resetAQI()
+            }
+            placeHolder.title = String(city.getAQI())
+            if (placeHolder.title == "-1") {
+                placeHolder.title = "Loading..."
+            }
+            placeHolder.subtitle = city.getCity()
+            placeHolder.coordinate = CLLocationCoordinate2D(latitude: city.getCoordinates()[0], longitude: -city.getCoordinates()[1])
+            Map.addAnnotation(placeHolder)
+            MKPoints.append(placeHolder)
+        }
+       
         return Map
     }
     
