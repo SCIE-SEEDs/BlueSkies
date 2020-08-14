@@ -101,13 +101,17 @@ class Location {
     fileprivate var country: String
     fileprivate var coordinates: [Double]
     fileprivate var aqi: Int
+
+    fileprivate let key1 : String = "a21ac2ea-e689-4db1-92dd-71e4800c5e48"
+    fileprivate let key2 : String = "55593aa1-c351-45bf-975a-9c687b2b1ecb"
+    fileprivate let key3 : String = "aea612ff-0a4f-41a8-af81-117b1db13615"
     
     public init() {
         city = ""
         state = ""
         country = "USA"
         coordinates = []
-        aqi = 0
+        aqi = -1
     }
     
     /**
@@ -121,7 +125,7 @@ class Location {
         self.state = state
         self.country = country
         self.coordinates = coordinates
-        self.aqi = 0
+        self.aqi = -1
         fetchData()
     }
     
@@ -130,18 +134,57 @@ class Location {
     */
     fileprivate func fetchData() -> Void {
         var jsonData: Data?
-        fetchSmogSpecifiedCityInput(city: self.city, state: self.state, country: self.country) {
+        print("Trying key1 with \(self.city)")
+        //key1
+        fetchSmogSpecifiedCityInput(city: self.city, state: self.state, country: self.country, key: key1 ) {
             (result: String) in
             //fetches the aqi info
             jsonData = result.data(using: .utf8)!
         }
-        let json = try? JSONSerialization.jsonObject(with: jsonData!, options: [])
-        let dictionary = (json as? [String: Any] )!
-        let data = (dictionary["data"]! as? [String: Any])!
-        let current = (data["current"]! as? [String: Any])!
-        let pollution = (current["pollution"]! as? [String: Any])!
-        //print("entered")
-        self.aqi = pollution["aqius"]! as! Int
+        var json = try? JSONSerialization.jsonObject(with: jsonData!, options: [])
+        var dictionary = (json as? [String: Any] )!
+        //print(dictionary)
+
+        //tries again with key2
+        if (dictionary["status"]! as? String)! == "fail" {
+            print("Trying key2 with \(self.city)")
+          fetchSmogSpecifiedCityInput(city: self.city, state: self.state, country: self.country, key: key2 ) {
+            (result: String) in
+            //fetches the aqi info
+            jsonData = result.data(using: .utf8)!
+          }
+          json = try? JSONSerialization.jsonObject(with: jsonData!, options: [])
+          dictionary = (json as? [String: Any] )!
+        }
+
+        //using key3 if needed
+        if (dictionary["status"]! as? String)! == "fail" {
+            print("Trying key3 with \(self.city)")
+            fetchSmogSpecifiedCityInput(city: self.city, state: self.state, country: self.country, key: key3 ) {
+              (result: String) in
+              //fetches the aqi info
+              jsonData = result.data(using: .utf8)!
+            }
+            json = try? JSONSerialization.jsonObject(with: jsonData!, options: [])
+            dictionary = (json as? [String: Any] )!
+        }
+
+        //finally sees if works
+        if (dictionary["status"]! as? String)! != "fail" {
+          let data = (dictionary["data"]! as? [String: Any])!
+          let current = (data["current"]! as? [String: Any])!
+          let pollution = (current["pollution"]! as? [String: Any])!
+          self.aqi = pollution["aqius"]! as! Int
+          print("success for \(self.city)")
+        }
+        //three times fail :/
+        else {
+          print("fail for \(self.city)")
+            //no change to aqi, incase already a valid value
+            //:/
+            //put some sort of error msg?
+        }
+        
     }
 
     /**
@@ -151,7 +194,7 @@ class Location {
      * @param country the country to search within
      * @completion the completion handler that returns String of JSON data
     */
-    fileprivate func fetchSmogSpecifiedCityInput(city: String, state: String, country: String, completion: @escaping (_ result: String) -> Void) {
+    fileprivate func fetchSmogSpecifiedCityInput(city: String, state: String, country: String, key: String, completion: @escaping (_ result: String) -> Void) {
         
         //converts the cities, state, and country into a URL safe format
         let newCity : String = city.stringByAddingPercentEncodingForRFC3986()!
@@ -200,7 +243,7 @@ class Location {
     }
 
     public func getAQI() -> Int {
-        resetAQI()
+        //resetAQI()
         return self.aqi
     }
 
