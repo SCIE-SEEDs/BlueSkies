@@ -9,14 +9,18 @@
 import SwiftUI
 
 struct CurrLoc: View {
-    // @State var city : City
-    @State var AQI = 299
+    @State var location : Location
+//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
+    var AQI: Int {
+        return location.getAQI()
+    }
+    
     @State var temp = 3
     @State var hum = 2
     @State var wind = 3
-    @State var advice = ""
     @State var Cunit = true
-
+    
     func feedback () -> String {
         var level = ""
         if AQI < 50 {
@@ -47,6 +51,7 @@ struct CurrLoc: View {
             return content
                 .foregroundColor(Color.white)
                 .font(Font.custom("Copperplate", size: 30))
+                .multilineTextAlignment(.center)
         }
     }
     
@@ -59,6 +64,16 @@ struct CurrLoc: View {
         }
     }
     
+//    var btnBack : some View { Button(action: {
+//        self.presentationMode.wrappedValue.dismiss()
+//        }) {
+//            HStack {
+//                Image(systemName: "cheveron.left")
+//                Text("\(location.getCity())")
+//            }
+//        }
+//    }
+    
     struct NumStyle: ViewModifier {
         func body (content: Content) -> some View {
             return content
@@ -68,10 +83,9 @@ struct CurrLoc: View {
     }
     
     var body: some View {
-        VStack {
-            Spacer()
-            Text("Panic Height").modifier(TitleStyle())
-            
+        // self.navigationItem.title = "\(location.getCity())"
+        VStack { // "Very Unhealthy" + "\n" + "Please Wear Mask"
+            Text("Panic Height in" + "\n" + "\(location.getCity())").modifier(TitleStyle())
             Spacer()
             Text("\(AQI)")
                 .foregroundColor(Color.white)
@@ -113,22 +127,17 @@ struct CurrLoc: View {
             }.padding(.horizontal, 100).multilineTextAlignment(.center)
 
             Spacer()
-
         }
         .background(Image("background"))
-    .navigationBarBackButtonHidden(true)
-    .navigationBarHidden(true)
+   // .navigationBarBackButtonHidden(true)
+   // .navigationBarItems(leading: btnBack)
+    //.navigationBarBackButtonHidden(true)
+    //.navigationBarHidden(true)
     }
 }
 
-//struct CurrLoc_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CurrLoc()
-//    }
-//}
-
 struct CurrLoc_Previews: PreviewProvider {
     static var previews: some View {
-        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+        CurrLoc(location: SanDiego)
     }
 }

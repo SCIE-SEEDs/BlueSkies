@@ -7,27 +7,41 @@
 //
 import SwiftUI
 
-struct CitySearch: View {
-    @State private var searchTerm: String = ""
-    let cityNames = ["Los Angeles", "San Diego", "San Francisco"]
+//struct City : Identifiable {
+//       var id = UUID() // universally unique value
+//       var name: String
+//   }
+//
+struct CityRow: View {
+       var location: Location
 
+       var body: some View {
+        Text(location.getCity())
+       }
+   }
+
+struct CitySearch: View {
     var body: some View {
-        List{
-            SearchBar(text: $searchTerm)
-            
-            ForEach(self.cityNames.filter{
-                self.searchTerm.isEmpty ? true : $0.localizedCaseInsensitiveContains(self.searchTerm)
-            }, id: \.self){ city in
-                Text(city)
+    let Locations : [Location] = [Atlanta, Amsterdam, Austin, Beijing, Berlin, Boston, Chicago, London, LosAngeles, Madrid, Miami, Moscow, Mumbai, NewYorkCity, Paris, Phoenix, SanDiego, SanFrancisco, SanJose, Seattle, Seoul, Shanghai, Tokyo, Toronto]
+
+    return NavigationView {
+        List(Locations) { location in
+            NavigationLink(destination: CurrLoc(location: location)) {
+                CityRow(location: location)
             }
         }
-        .navigationBarTitle(Text("Where can I breathe?")
-            .foregroundColor(Color.black)
-            .font(Font.custom("Copperplate", size: 40))
-        )
-        
-        .foregroundColor(Color.black)
-        .font(Font.custom("Futura-Medium", size: 18))
+        .navigationBarBackButtonHidden(true)
+        }
+    }
+}
+
+// single row view that represent one single city
+struct CityView: View {
+    var location: Location
+
+    var body: some View {
+        Text(location.getCity())
+            .font(.largeTitle)
     }
 }
 

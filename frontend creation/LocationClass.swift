@@ -94,7 +94,7 @@
 
 import Foundation
 
-class Location {
+class Location : Identifiable{
    // var id: Int
     fileprivate var city: String
     fileprivate var state: String

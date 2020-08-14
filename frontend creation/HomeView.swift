@@ -57,22 +57,25 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-            NavigationLink(destination: CurrLoc()) {
-                Text("Current City").modifier(Button())
-            }.background(Image("button"))
+//            NavigationLink(destination: CurrLoc()) {
+//                Text("Current City").modifier(Button())
+//            }.background(Image("button"))
             NavigationLink(destination: CitySearch()) {
                 Text("City Search").modifier(Button())
             }.background(Image("button"))
+                .padding(.top, 100)
+                .padding(.bottom, 30)
             NavigationLink(destination: Explore()) {
                 Text("Explore").modifier(Button())
             }.background(Image("button"))
-            VStack {
-                Text("location status: \(locationManager.statusString)")
-                HStack {
-                    Text("latitude: \(userLatitude)")
-                    Text("longitude: \(userLongitude)")
-                }
-            }
+            Spacer()
+//            VStack {
+//                Text("location status: \(locationManager.statusString)")
+//                HStack {
+//                    Text("latitude: \(userLatitude)")
+//                    Text("longitude: \(userLongitude)")
+//                }
+//            }
         }
         .background(Image("background"))
     }
