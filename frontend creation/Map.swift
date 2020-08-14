@@ -44,6 +44,7 @@ struct Map: UIViewRepresentable {
                 city.resetAQI()
             }
             placeHolder.title = String(city.getAQI())
+            //if aqi is invalid/key don't work
             if (placeHolder.title == "-1") {
                 placeHolder.title = "Loading..."
             }

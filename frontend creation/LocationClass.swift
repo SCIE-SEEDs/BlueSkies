@@ -94,7 +94,7 @@
 
 import Foundation
 
-class Location : Identifiable{
+class Location : Identifiable {
    // var id: Int
     fileprivate var city: String
     fileprivate var state: String
@@ -102,9 +102,7 @@ class Location : Identifiable{
     fileprivate var coordinates: [Double]
     fileprivate var aqi: Int
 
-    fileprivate let key1 : String = "a21ac2ea-e689-4db1-92dd-71e4800c5e48"
-    fileprivate let key2 : String = "55593aa1-c351-45bf-975a-9c687b2b1ecb"
-    fileprivate let key3 : String = "aea612ff-0a4f-41a8-af81-117b1db13615"
+    fileprivate let keys : [String] = ["a21ac2ea-e689-4db1-92dd-71e4800c5e48", "55593aa1-c351-45bf-975a-9c687b2b1ecb", "aea612ff-0a4f-41a8-af81-117b1db13615", "55adb354-0305-448d-bb3a-37459c538aa4", "62f1c45e-a6bc-49d0-80c6-bff249ce77c7", "6c0a8ae2-7a37-44e5-b5cd-0e4bed500e13"]
     
     public init() {
         city = ""
@@ -134,42 +132,26 @@ class Location : Identifiable{
     */
     fileprivate func fetchData() -> Void {
         var jsonData: Data?
-        print("Trying key1 with \(self.city)")
+        var dictionary : [String: Any]
+        var json : Any?
         //key1
-        fetchSmogSpecifiedCityInput(city: self.city, state: self.state, country: self.country, key: key1 ) {
-            (result: String) in
-            //fetches the aqi info
-            jsonData = result.data(using: .utf8)!
-        }
-        var json = try? JSONSerialization.jsonObject(with: jsonData!, options: [])
-        var dictionary = (json as? [String: Any] )!
-        //print(dictionary)
-
-        //tries again with key2
-        if (dictionary["status"]! as? String)! == "fail" {
-            print("Trying key2 with \(self.city)")
-          fetchSmogSpecifiedCityInput(city: self.city, state: self.state, country: self.country, key: key2 ) {
-            (result: String) in
-            //fetches the aqi info
-            jsonData = result.data(using: .utf8)!
-          }
-          json = try? JSONSerialization.jsonObject(with: jsonData!, options: [])
-          dictionary = (json as? [String: Any] )!
-        }
-
-        //using key3 if needed
-        if (dictionary["status"]! as? String)! == "fail" {
-            print("Trying key3 with \(self.city)")
-            fetchSmogSpecifiedCityInput(city: self.city, state: self.state, country: self.country, key: key3 ) {
-              (result: String) in
-              //fetches the aqi info
-              jsonData = result.data(using: .utf8)!
+        for keye in keys {
+            print("attempting \(keye)")
+            fetchSmogSpecifiedCityInput(city: self.city, state: self.state, country: self.country, key: keye ) {
+                (result: String) in
+                //fetches the aqi info
+                jsonData = result.data(using: .utf8)!
+                print(result)
             }
             json = try? JSONSerialization.jsonObject(with: jsonData!, options: [])
             dictionary = (json as? [String: Any] )!
+            if (dictionary["status"]! as? String)! != "fail" {
+                print("success! found info")
+                break
+            }
         }
-
-        //finally sees if works
+        dictionary = (json as? [String: Any] )!
+        
         if (dictionary["status"]! as? String)! != "fail" {
           let data = (dictionary["data"]! as? [String: Any])!
           let current = (data["current"]! as? [String: Any])!
@@ -180,6 +162,7 @@ class Location : Identifiable{
         //three times fail :/
         else {
           print("fail for \(self.city)")
+            //print(dictionary)
             //no change to aqi, incase already a valid value
             //:/
             //put some sort of error msg?
@@ -204,7 +187,7 @@ class Location : Identifiable{
         //semaphores are used for shared resources
         let semaphore = DispatchSemaphore (value: 0)
         
-        let stringURL = "http://api.airvisual.com/v2/city?city=\(newCity)&state=\(newState)&country=\(newCountry)&key=55593aa1-c351-45bf-975a-9c687b2b1ecb"
+        let stringURL = "http://api.airvisual.com/v2/city?city=\(newCity)&state=\(newState)&country=\(newCountry)&key=\(key)"
         //"http://api.airvisual.com/v2/city?city=Los%20Angeles&state=California&country=USA&key=55593aa1-c351-45bf-975a-9c687b2b1ecb"
 
         var request = URLRequest(url: URL(string: stringURL)!,timeoutInterval: Double.infinity)
