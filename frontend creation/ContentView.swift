@@ -20,13 +20,21 @@ struct ContentView: View {
                 .foregroundColor(Color.white)
                 .font(Font.custom("Copperplate", size: 40))
                 .padding(.bottom, 150)
+            Text(PositiveMessagesArray.randomElement()!)
+            .bold()
+                .background(RoundedRectangle(cornerRadius: 5).fill(Color.white).opacity(0.3))
+            .foregroundColor(Color.white)
+            .font(Font.custom("Futura-Medium", size: 20))
+            .padding(.bottom, 150)
+            .multilineTextAlignment(.center)
+
             NavigationLink(destination: HomeView()) {
                 Text("Get Started")
                     .foregroundColor(Color.black)
                     .font(Font.custom("Futura-Medium", size: 20))
-            }.background(Image("Button"))
+            }.background(Image("button"))
         }
-        .background(Image("Background"))
+        .background(Image("background"))
     }
 }
 

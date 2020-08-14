@@ -39,7 +39,7 @@ struct Map: UIViewRepresentable {
         let SanFrancisco = MKPointAnnotation()
         SanFrancisco.title = "100"
         SanFrancisco.subtitle = "San Francisco"
-        SanFrancisco.coordinate = CLLocationCoordinate2D(latitude: Phoenix.getCoordinates()[0], longitude: -Phoenix.getCoordinates()[1])
+        SanFrancisco.coordinate = CLLocationCoordinate2D(latitude: 37.7749, longitude: 122.4194)
         Map.addAnnotation(SanFrancisco)
         
         let LosAngeles = MKPointAnnotation()
