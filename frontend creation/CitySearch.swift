@@ -21,7 +21,7 @@ struct CitySearch: View {
                 Text(city)
             }
         }
-        .navigationBarTitle(Text("Where could I breath?")
+        .navigationBarTitle(Text("Where can I breathe?")
             .foregroundColor(Color.black)
             .font(Font.custom("Copperplate", size: 40))
         )

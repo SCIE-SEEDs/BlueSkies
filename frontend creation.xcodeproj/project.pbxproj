@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
 		2D588A9D24E632BC0094AA34 /* LocationStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D588A9C24E632BC0094AA34 /* LocationStorage.swift */; };
+		1679CE5F24E6582E007CAAA4 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1679CE5E24E6582E007CAAA4 /* Messages.swift */; };
 		2DFDE48724E61497007207D6 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFDE48624E61497007207D6 /* StringExtension.swift */; };
 		2DFDE48924E6149C007207D6 /* LocationClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFDE48824E6149C007207D6 /* LocationClass.swift */; };
 		7454B27924E52E500093AC4E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7454B27824E52E500093AC4E /* LocationManager.swift */; };
@@ -26,7 +28,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+
 		2D588A9C24E632BC0094AA34 /* LocationStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStorage.swift; sourceTree = "<group>"; };
+		1679CE5E24E6582E007CAAA4 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		2DFDE48624E61497007207D6 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		2DFDE48824E6149C007207D6 /* LocationClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationClass.swift; sourceTree = "<group>"; };
 		7454B27824E52E500093AC4E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -77,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				7462E4FB24E375DC006B3448 /* AppDelegate.swift */,
+				1679CE5E24E6582E007CAAA4 /* Messages.swift */,
 				7462E4FD24E375DC006B3448 /* SceneDelegate.swift */,
 				7462E4FF24E375DC006B3448 /* ContentView.swift */,
 				7462E51524E3778B006B3448 /* HomeView.swift */,
@@ -179,6 +184,7 @@
 				7462E51224E3774E006B3448 /* CurrLoc.swift in Sources */,
 				2DFDE48924E6149C007207D6 /* LocationClass.swift in Sources */,
 				7462E51624E3778B006B3448 /* HomeView.swift in Sources */,
+				1679CE5F24E6582E007CAAA4 /* Messages.swift in Sources */,
 				7454B27924E52E500093AC4E /* LocationManager.swift in Sources */,
 				7462E51824E377C9006B3448 /* Map.swift in Sources */,
 				7462E4FC24E375DC006B3448 /* AppDelegate.swift in Sources */,

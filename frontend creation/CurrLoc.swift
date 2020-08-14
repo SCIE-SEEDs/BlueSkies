@@ -115,7 +115,7 @@ struct CurrLoc: View {
             Spacer()
 
         }
-        .background(Image("Background"))
+        .background(Image("background"))
     .navigationBarBackButtonHidden(true)
     .navigationBarHidden(true)
     }
