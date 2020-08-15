@@ -24,13 +24,16 @@ struct CitySearch: View {
     var body: some View {
     let Locations : [Location] = [Atlanta, Amsterdam, Austin, Beijing, Berlin, Boston, Chicago, London, LosAngeles, Madrid, Miami, Moscow, Mumbai, NewYorkCity, Paris, Phoenix, SanDiego, SanFrancisco, SanJose, Seattle, Seoul, Shanghai, Tokyo, Toronto]
 
-    return NavigationView {
+     return NavigationView {
         List(Locations) { location in
             NavigationLink(destination: CurrLoc(location: location)) {
                 CityRow(location: location)
             }
         }
         .navigationBarBackButtonHidden(true)
+        .navigationBarTitle("Cities")
+          .foregroundColor(Color.blue)
+          .font(Font.custom("Copperplate", size: 20))
         }
     }
 }
@@ -50,3 +53,4 @@ struct CitySearch_Previews: PreviewProvider {
         CitySearch()
     }
 }
+

@@ -11,21 +11,23 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Text("Let's get you")
+            Text("Let's find")
                 .bold()
                 .foregroundColor(Color.white)
                 .font(Font.custom("Copperplate", size: 30))
-            Text("breathing!")
+            .padding(.top, 75)
+
+            Text("blue skies")
                 .bold()
                 .foregroundColor(Color.white)
                 .font(Font.custom("Copperplate", size: 40))
-                .padding(.bottom, 150)
+                .padding(.bottom, 50)
             Text(PositiveMessagesArray.randomElement()!)
             .bold()
                 .background(RoundedRectangle(cornerRadius: 5).fill(Color.white).opacity(0.3))
             .foregroundColor(Color.white)
             .font(Font.custom("Futura-Medium", size: 20))
-            .padding(.bottom, 150)
+            .padding(.bottom, 100)
             .multilineTextAlignment(.center)
 
             NavigationLink(destination: HomeView()) {
@@ -33,6 +35,7 @@ struct ContentView: View {
                     .foregroundColor(Color.black)
                     .font(Font.custom("Futura-Medium", size: 20))
             }.background(Image("button"))
+                .padding(.bottom, 100)
         }
         .background(Image("background"))
     }
