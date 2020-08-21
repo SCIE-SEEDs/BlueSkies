@@ -6,11 +6,12 @@ The world bank and the Institute for Health Metrics and Evaluation estimated tha
 
 Blue Skies is an iOS application created by team SCIE during our Dandilyonn internship in Summer 2020. Our goal is to provide accessible, unbiased representation of air pollution - the air quality index for cities - and provide nudges to encourage users to take small actions in their daily lives to reduce air pollution and bring back blue skies.
 
-
-### To run this app:
-
-First git clone this repository, then open frontend creation.xcodeproj (must have Xcode installed!).
+### Demonstration
 
 <blockquote class="imgur-embed-pub" lang="en" data-id="a/BzdHMCE"><a href="https://gifs.com/gif/city-search-demo-blue-skies-Mwv9NQ">City Search Video Demonstration (click here!)</a></blockquote>
 
 <blockquote class="imgur-embed-pub" lang="en" data-id="a/BzdHMCE"><a href="https://gifs.com/gif/explore-page-blue-skies-p8AzVr">Explore Page Video Demonstration (click here!)</a></blockquote>
+
+### To run this app:
+
+First git clone this repository, then open frontend creation.xcodeproj (must have Xcode installed!).
