@@ -9,3 +9,6 @@ https://gifs.com/gif/city-search-demo-blue-skies-Mwv9NQ
 
 
 [![City Search Feature Demo of Blue Skies]("Demo Assets"/CitySearch.gif)](https://gifs.com/gif/city-search-demo-blue-skies-Mwv9NQ)]
+
+
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/vt5fpE0bzSY)
