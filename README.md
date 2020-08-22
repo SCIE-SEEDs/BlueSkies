@@ -8,6 +8,8 @@ Blue Skies is an iOS application created by team SCIE during our Dandilyonn inte
 
 ### Demonstration
 
+<blockquote class="imgur-embed-pub" lang="en" data-id="a/BzdHMCE"><a href="https://www.youtube.com/watch?v=qFSVSUFDkv8&feature=youtu.be">Our Presentation </a></blockquote>
+
 <blockquote class="imgur-embed-pub" lang="en" data-id="a/BzdHMCE"><a href="https://gifs.com/gif/city-search-demo-blue-skies-Mwv9NQ">City Search Video Demonstration (click here!)</a></blockquote>
 
 <blockquote class="imgur-embed-pub" lang="en" data-id="a/BzdHMCE"><a href="https://gifs.com/gif/explore-page-blue-skies-p8AzVr">Explore Page Video Demonstration (click here!)</a></blockquote>
